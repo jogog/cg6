@@ -25,7 +25,7 @@ public class Vertex {
 		this.x = x;
 		this.y = y;
 		color = c;
-		if (text != null&&text!="") {
+		if (text != null && text != "") {
 			this.text = text;
 		}
 		connects = new ArrayList<Vertex>();
@@ -117,9 +117,56 @@ public class Vertex {
 
 	public void draw(GraphicsContext gc) {
 		for (Vertex item : connects) {
-			if(item.x>x) {
-				
+			int x1=0, x2=0, y1=0, y2=0;
+			if (item.x > x) {
+				if (item.y < y) {
+					x1 = x;
+					x2 = item.x;
+					y1 = item.y;
+					y2 = y;
+				}else {
+					x1 = x;
+					x2 = item.x;
+					y1 = y;
+					y2 = item.y;
+				}
+			}else {
+				if (item.y < y) {
+					x1 = item.x;
+					x2 = x;
+					y1 = item.y;
+					y2 = y;
+				}else {
+					x1 = item.x;
+					x2 = x;
+					y1 = y;
+					y2 = item.y;
+				}
 			}
+
+//			if(item.x>x) {
+////				if(item.x-x<w/2) {
+////					x1 = x;
+////					x2=item.x;
+////				}else {
+//				x1 = x;
+//				x2=item.x;
+////				}
+//			}else {
+//				x1=item.x;
+//				x2 = x;
+//			}
+//			if(item.y>y) {
+//				y1 = y;
+//				y2 = item.y;
+//			}else{
+//				y1 = item.y;
+//				y2 = y;
+//			}
+			gc.strokeLine(x1, y1, (x1 + x2) / 2, y1);
+			gc.strokeLine((x1 + x2) / 2, y1, (x1 + x2) / 2, y2);
+			gc.strokeLine((x1 + x2) / 2, y2, x2, y2);
+
 			item.drawVertex(gc);
 		}
 		drawVertex(gc);
